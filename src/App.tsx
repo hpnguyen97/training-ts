@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import Login from './pages/Login';
+import ModalProject from './components/Project/ModalProject';
 
 function App() {
+
+  const [openModalProject, setOpenModalProject] = useState(false)
   return (
     <div className="App">
-      <Login />
+      <ModalProject openModalProject={openModalProject} setOpenModalProject={setOpenModalProject} title="Project" />
     </div>
   );
 }

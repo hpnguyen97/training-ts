@@ -22,8 +22,6 @@ interface SignInForm {
   password: string;
 }
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
 function FormLogin({ handleSubmit }: FormLoginProps): JSX.Element {
   return (
     <Box
@@ -50,8 +48,9 @@ function FormLogin({ handleSubmit }: FormLoginProps): JSX.Element {
           password: '',
         }}
         onSubmit={async (values) => {
-            await sleep(500);
-          }}
+          await new Promise((r) => setTimeout(r, 500));
+          alert(JSON.stringify(values, null, 2));
+        }}
         validationSchema={Yup.object().shape({
           userNameOrEmailAddress: Yup.string().required(),
           password: Yup.string().required(),
@@ -60,7 +59,10 @@ function FormLogin({ handleSubmit }: FormLoginProps): JSX.Element {
         {(props: FormikProps<SignInForm>) => {
           const { values, touched, errors, handleBlur, handleChange } = props;
           return (
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={(e) => {
+              e.preventDefault()
+              handleSubmit(e)
+            }}>
               <Grid>
                 <Grid item lg={10} md={10} sm={10} xs={10}>
                   <PersonIcon />
